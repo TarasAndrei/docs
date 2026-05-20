@@ -289,11 +289,13 @@ features = [
 # ----------------------------------------------------------------------------
 [[project.theme.palette]]
 scheme = "default"
+accent = "indigo"
 toggle.icon = "lucide/sun"
 toggle.name = "Включить тёмную тему"
 
 [[project.theme.palette]]
 scheme = "slate"
+accent = "orange"
 toggle.icon = "lucide/moon-star"
 toggle.name = "Включить светлую тему"
 
