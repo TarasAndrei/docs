@@ -45,7 +45,7 @@ copyright = """
 #
 # Read more: https://zensical.org/docs/setup/navigation/
 nav = [
-  {"Home" = "index.md"},
+  {"Docs" = "index.md"},
   {"Basics" = [
      "basics/hardware.md",
      "basics/software.md"
