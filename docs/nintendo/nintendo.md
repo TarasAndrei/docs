@@ -1,0 +1,9 @@
+---
+icon: lucide/package-open
+---
+
+# Nintendo
+
+Среда разработки для платформы Nintendo устанавливается и настраивается через Nintendo Package Manager (NNPM).
+
+> Подробнее в [документации](https://docs.google.com/document/d/1qtTK1o3v5CzCY8qKBRjcjqiiBjALHPez/edit?usp=sharing&ouid=108020388252141246965&rtpof=true&sd=true).

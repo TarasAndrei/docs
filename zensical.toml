@@ -44,11 +44,18 @@ copyright = """
 # can be defined using TOML syntax.
 #
 # Read more: https://zensical.org/docs/setup/navigation/
-# nav = [
-#   { "Getting started" = "index.md" },
-#   { "Markdown in 5min" = "markdown.md" },
-# ]
-
+nav = [
+  {"Home" = "index.md"},
+  {"Basics" = [
+     "basics/hardware.md",
+     "basics/software.md"
+  ]},
+  {"Nintendo" = [
+     "nintendo/nintendo.md",
+     "nintendo/nintendo-build.md",
+     "nintendo/nintendo-target-manager.md"
+  ]}
+]
 # With the "extra_css" option you can add your own CSS styling to customize
 # your Zensical project according to your needs. You can add any number of
 # CSS files.
