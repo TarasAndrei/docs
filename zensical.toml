@@ -54,6 +54,9 @@ nav = [
      "nintendo/nintendo.md",
      "nintendo/nintendo-build.md",
      "nintendo/nintendo-target-manager.md"
+  ]},
+    {"Quality Assurance" = [
+     "quality-assurance/quality-assurance.md"
   ]}
 ]
 # With the "extra_css" option you can add your own CSS styling to customize
