@@ -55,6 +55,9 @@ nav = [
      "nintendo/nintendo-build.md",
      "nintendo/nintendo-target-manager.md"
   ]},
+    {"Steam" = [
+     "steam/steam.md"
+  ]},
     {"Quality Assurance" = [
      "quality-assurance/quality-assurance.md"
   ]}
