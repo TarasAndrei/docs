@@ -2,7 +2,7 @@
 icon: lucide/package-open
 ---
 
-# Nintendo
+# Nintendo Environment
 
 Среда разработки для платформы Nintendo устанавливается и настраивается через Nintendo Package Manager (NNPM).
 

@@ -2,7 +2,7 @@
 icon: lucide/hammer
 ---
 
-# Steam
+# Steam Build
 
 Для сборки и публикации Demo-версии на платформе Steam необходимо выполнить следующие шаги:
 
