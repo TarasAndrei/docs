@@ -30,8 +30,8 @@ icon: lucide/rocket
 
 </div>
 
-[switch build]: ../nintendo/switch-environment.md
-[steam build]: ../steam/windows-build.md
+[switch build]: ../docs/nintendo/switch-environment.md
+[steam build]: ../docs/steam/windows-build.md
 
 !!! note "Три важных момента:"
 
