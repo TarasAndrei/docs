@@ -4,7 +4,7 @@ icon: lucide/blocks
 
 # Nintendo Switch DLC
 
-Для создания дополнительного контента для Nintendo Switch выполните следующие шаги:
+Для создания дополнительного контента для Nintendo Switch следуйте инструкции:
 
 > Подробнее в [документации](https://docs.google.com/document/d/1q36-z_g-jhN_gUnT1YjfnIni-DUxoX20iuWTNGVhKME/edit?usp=sharing).
 

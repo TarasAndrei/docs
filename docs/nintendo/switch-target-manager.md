@@ -2,7 +2,7 @@
 icon: lucide/cable
 ---
 
-# Nintendo Target Manager 2
+# Nintendo Connection
 
 Для подключения консоли к ПК, установки билдов, просмотра логов и отладки требуется Nintendo Target Manager 2.
 

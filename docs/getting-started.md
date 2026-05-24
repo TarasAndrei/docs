@@ -14,6 +14,8 @@ icon: lucide/rocket
 - [x] Убедитесь, что у вас есть доступ (Trello, GitHub)
 - [x] Настройте среду разработки (Unity, IDE, SDK)
 
+Актуальные версии Unity: **6000.0.55** и **6000.1.15**.
+
 <div class="grid cards" markdown>
 
 -   :fontawesome-solid-gamepad:{ .lg .middle } __Nintendo__
