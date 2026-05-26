@@ -4,19 +4,67 @@ icon: lucide/box
 
 # Unity
 
+## Отсутствие файлов после клонирования
+
+Если **сразу после клонирования** нового проекта с репозитория в приложении **GitHub Desktop** отображаются удаленные файлы с иконкой **(-)** - проверьте длину полного пути к отсутствующим файлам в проводнике.
+
+Рекоммендуется клонировать проекты в короткие пути по типу `C:\Work`.
+
+Иногда достаточно **включить поддержку длинных путей** в настройках **Git** и **Windows**:
+
+- **ПКМ** на название **Current repository** в приложении **GitHub Desktop** > **Show in Explorer**
+- Нажмите **ЛКМ** в область пути в проводнике > введите `CMD` > ++enter++
+- Запустите команду `git config --global core.longpaths true`
+- Далее нажмите ++win+r++ и введите > `gpedit.msc` > ++enter++
+- Найдите параметр `Enable Win32 long paths` следуя **Computer Configuration** > **Administrative Templates** > **System** > **Filesystem**
+-  **ПКМ** на название > **Edit** > **Enabled** > **Apply** > **OK**
+- **Перезагрузите ПК** и проверьте GitHub Desktop
+
 ## Начальный экран при запуске игры
 
 Для кастомизации или отключения [заставки при запуске игры](https://docs.unity3d.com/Manual/class-PlayerSettingsSplashScreen.html) (логотипа Unity):
 
 - Откройте окно **Edit** > **Project Settings** > **Player** > **Splash Image**
 - Смените настройки для платформы **PC** (Windows, Mac, Linux settings)
+- Проверьте результат нажав кнопку **Preview**
 - Билды для консолей унаследуют выставленные параметры
 
 ## Настройка Input System
 
-Если в проекте используется **Unity Input System** - добавьте соответствующий платформе пакет в папку `..\Packages` из папки с установленным SDK.
+Если в проекте используется **Unity Input System** - добавьте соответствующий платформе пакет в папку `..\Packages` из папки с установленным SDK:
+
+- Откройте `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\UnityForNintendoSwitch\Packages`
+- Скопируйте папку `com.unity.inputsystem.switch@0.1.7-pre`
+- Откройте `C:\Work\Project_Name\Packages`
+- Вставьте папку и дождитесь рекомпилляции проекта
+- Проверьте чтобы в **Project Settings** > **Player** > **Other Settings** > **Controls** > **Supported Npad Styles** > были настройки **Full Key, Handheld, Joy Dual**
+
+!!! note
+    Если в проекте созданы глобальные настройки ввода в **Project Settings** > **Input System Package** > **Settings** > **Supported Devices** > Добавьте **Switch Controller (on Switch)** и **Switch Pro Controller**. Они будут отображаться в списке как **NPad** и **SwitchProControllerHID**.
+
+    Опционально: добавьте по-необходимости **Gamepad**, **Keyboard**, **Mouse**, **Virtual Mouse**.
+
+Если вы не работали с этим пакетом или не знакомы с основами кросс-платформенного ввода рекоммендую посмотреть официальный туториал от Unity: :fontawesome-brands-youtube:{ .youtube } [YouTube](https://youtu.be/5tOOstXaIKE?si=GkKBFIcOye7RFGBV).
 
 > Подробнее о Input System в [документации Unity](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.19/manual/ActionsEditor.html).
+
+## Вибрация для контроллера
+
+Вибрацию в играх с поддержкой **Unity Input System** как правило добавляют так:
+
+``` CSharp
+Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
+```
+
+Самые частые проблемы:
+
+- **Бесконечная вибрация** при включении Паузы, когда `Time.timeScale = 0` (не срабатывает остановка вибрации через `Invoke`)
+- Завершение вибрации не срабатывает в `Coroutine`, если для отсчета интервалов используются `WaitForSeconds` или `Time.deltaTime`
+- `NullReferenceException` в **Unity Editor** при отсутствии подключенного контроллера
+
+Решением является замена `Time.deltaTime` на `Time.unscaledDeltaTime`, `WaitForSeconds` на  `WaitForSecondsRealtime` или `Invoke` на `Coroutine`, с учетом сказанного ранее.
+
+> Подробнее в [документации Unity](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.19/manual/Gamepad.html#rumble).
 
 ## Рефакторинг Save/Load System
 
@@ -42,7 +90,7 @@ icon: lucide/box
 
 ## Тесты методов в Unity Editor
 
-Чтобы проверить функционал в редакторе Unity, добавьте над методом атрибут [ContextMenu](https://docs.unity3d.com/ScriptReference/ContextMenu.html) (например, `[ContextMenu("Test")]`). Далее, во время `Play Mode` найдите объект с этим скриптом в окне `Inspector`, нажмите на три точки у компонента (Script) и выберите свое контекстное меню. Оно запустит ваш тестовый метод.
+Чтобы проверить функционал в редакторе Unity, добавьте над методом атрибут [ContextMenu](https://docs.unity3d.com/ScriptReference/ContextMenu.html) (например, `[ContextMenu("Test")]`). Найдите объект с этим скриптом в окне **Inspector** на сцене, нажмите на три точки у компонента `(Script)` и выберите свое контекстное меню. Оно запустит ваш тестовый метод. Работает вне зависимости от **Play Mode**.
 
 ## Смена HDRP на URP
 
