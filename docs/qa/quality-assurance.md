@@ -10,8 +10,20 @@ icon: lucide/bug
 
 ??? info "Также вы можете ознакомиться:"
 
-	- [Nintendo Switch Testing](https://docs.google.com/document/d/1RVHozeDx2ZtCdIt6FojWdHN_Q2C-5ewRuHTD7FutAmQ/edit?usp=sharing)  
+	- [Nintendo Switch Testing](https://docs.google.com/document/d/1RVHozeDx2ZtCdIt6FojWdHN_Q2C-5ewRuHTD7FutAmQ/edit?usp=sharing)
 	- [Nintendo Switch QA Check List](https://docs.google.com/document/d/1811Xiet4NK3nyVQ2XYssZNi0cxWejFT0GTZz3fYYbSY/edit?usp=sharing)
+
+## Проверка количества сохранений в минуту
+
+Приложение **не должно** выполнять запись данных в память консоли чаще **32** раз в минуту. Перед отправкой финального билда проверьте этот пункт при помощи **FsAccessLogChecker**:
+
+- Нажмите ++win+r++ > введите `CMD` > ++enter++
+- Перетащите в окно командной строки **FsAccessLogChecker** из папки `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\NintendoSDK\Tools\FsAccessLogChecker`
+- Поставьте пробел нажав клавишу ++space++
+- Перетащите в окно командной строки ваш файл **FsAccessLog.txt**
+- Нажмите ++enter++
+
+**Ожидаемый результат**: Все поля Result отображают `[PASS]`
 
 !!! warning
 
