@@ -42,7 +42,7 @@ icon: lucide/box
 !!! note
     Если в проекте созданы глобальные настройки ввода в **Project Settings** > **Input System Package** > **Settings** > **Supported Devices** > Добавьте **Switch Controller (on Switch)** и **Switch Pro Controller**. Они будут отображаться в списке как **NPad** и **SwitchProControllerHID**.
 
-    Опционально: добавьте по-необходимости **Gamepad**, **Keyboard**, **Mouse**, **Virtual Mouse**.
+    **Опционально**: добавьте по-необходимости **Gamepad**, **Keyboard**, **Mouse** и **Virtual Mouse**.
 
 Если вы не работали с этим пакетом или не знакомы с основами кросс-платформенного ввода рекоммендую посмотреть официальный туториал от Unity: :fontawesome-brands-youtube:{ .youtube } [YouTube](https://youtu.be/5tOOstXaIKE?si=GkKBFIcOye7RFGBV).
 
@@ -79,6 +79,10 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 !!! note
 
     При экспорте изображений из **Figma** применяйте масштабирование **4x** либо **512w** если нужен конкретный размер (например, для трофеев PlayStation).
+
+!!! tip
+
+    Для добавления UI-подсказок для кнопок рекоммендуется использовать ассет [UI Hints Universal v3.0](https://trello.com/c/kbFEZagK/52-ui-hints-universal-auto-hints).
 
 ## Быстрая замена файлов
 
@@ -136,6 +140,6 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 - [Visual Studio debugger](https://learn.microsoft.com/ru-ru/visualstudio/debugger/debugger-feature-tour?view=visualstudio)
 - [Debug.LogError](https://docs.unity3d.com/ScriptReference/Debug.LogError.html)
 
-!!! note "Unity Debug Styling"
+!!! tip "Unity Debug Styling"
 
     Unity класс `Debug` поддерживает [Rich-Text форматирование](https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/StyledText.html).
