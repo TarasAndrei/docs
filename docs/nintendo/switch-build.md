@@ -17,7 +17,7 @@ icon: lucide/hammer
 - **Ошибка загрузки ассетов**: `Application has been terminated manually` > **Асинхронная загрузка** по частям или загрузка без **Addressables**
 - **Ссылки на файлы, что были разрушены** или еще не загрузились: `NullReferenceException: Object reference not set to an instance of an object` > Проверка сцен в **Unity Editor** и отладка во время **Play Mode**
 
-[Рефактор Save System]: ../docs/guides/unity.md#saveload-system
+[Рефактор Save System]: ../guides/unity.md#saveload-system
 
 ??? note "Пример поиска отсутствующих скриптов > Добавить в ..\Assets\Editor"
 

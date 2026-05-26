@@ -78,7 +78,7 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 
 ???+ example "Пример настроенного пресета"
 
-    ![Texture Importer Preset](../docs/assets/texture-importer-preset.png)
+    ![Texture Importer Preset](../assets/texture-importer-preset.png)
 
 !!! note
 
