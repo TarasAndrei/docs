@@ -20,6 +20,10 @@ icon: lucide/box
 -  **ПКМ** на название > **Edit** > **Enabled** > **Apply** > **OK**
 - **Перезагрузите ПК** и проверьте GitHub Desktop
 
+???+ example "Пример примененной настройки"
+
+    ![Texture Importer Preset](../assets/win-long-paths.png)
+
 ## Начальный экран при запуске игры
 
 Для кастомизации или отключения [заставки при запуске игры](https://docs.unity3d.com/Manual/class-PlayerSettingsSplashScreen.html) (логотипа Unity):
@@ -115,6 +119,10 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 - В окне **Inspector** (++ctrl+3++) найдите используемый шейдер
 - Если это кастомный шейдер в **Shader Graph** , нажмите **Edit Shader...**
 - Добавьте **URP** с настройкой `Alpha Clipping` и Сохраните (++ctrl+s++)
+
+???+ example "Пример настроек из Shader Graph"
+
+    ![Texture Importer Preset](../assets/shader-graph-urp.png)
 
 Чтобы перевести материалы, **шейдеры которых не поддерживают URP**:
 

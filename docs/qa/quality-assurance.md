@@ -8,7 +8,7 @@ icon: lucide/bug
 
 Для проверки билдов на соответствие стандартам Steam у нас есть [чек-лист](https://docs.google.com/spreadsheets/d/1yphqFk6BQN9Ym3UKWydVDYw9ptzro5JN9ZwKkJoDVtk/edit?usp=sharing).
 
-??? info "Также вы можете ознакомиться:"
+???+ info "Также вы можете ознакомиться:"
 
 	- [Nintendo Switch Testing](https://docs.google.com/document/d/1RVHozeDx2ZtCdIt6FojWdHN_Q2C-5ewRuHTD7FutAmQ/edit?usp=sharing)
 	- [Nintendo Switch QA Check List](https://docs.google.com/document/d/1811Xiet4NK3nyVQ2XYssZNi0cxWejFT0GTZz3fYYbSY/edit?usp=sharing)
@@ -24,6 +24,10 @@ icon: lucide/bug
 - Нажмите ++enter++
 
 **Ожидаемый результат**: Все поля Result отображают `[PASS]`
+
+???+ example "Пример успешного теста"
+
+    ![Texture Importer Preset](../assets/check-result-pass.png)
 
 !!! warning
 
