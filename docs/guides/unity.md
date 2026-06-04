@@ -68,6 +68,19 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 
 Решением является замена `Time.deltaTime` на `Time.unscaledDeltaTime`, `WaitForSeconds` на  `WaitForSecondsRealtime` или `Invoke` на `Coroutine`, с учетом сказанного ранее.
 
+В некоторых случаях, когда зависимость от игрового времени не обязательна - можно сделать метод остановки вибрации асинхронным:
+
+``` CSharp
+private async void ResetHaptics()
+{
+    await Task.Delay(500);
+
+    if (Gamepad.current == null) return;
+
+    Gamepad.current.ResetHaptics();
+}
+```
+
 > Подробнее в [документации Unity](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.19/manual/Gamepad.html#rumble).
 
 ## Рефакторинг Save/Load System
@@ -141,6 +154,45 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 Также, проверьте текущие лимиты в **Project Settings** > **Quality** > **Render Pipeline Asset** > `Inspector` > **Lighting** > **Per Object Limit**. В отличие от PC, консоль поддерживает до 8 источников света на одну сетку (компонент `Mesh Renderer`).
 
 Если проблема в лимите или количестве источников света - увеличьте лимит, замените часть источников на модели с эмиссивным материалом и/или запеките освещение на сцене.
+
+## Оптимизация
+
+Обеспечение стабильных **30+** кадров в секунду (FPS) требует **балансировки** нагрузки **между CPU и GPU**.
+
+Выберите подходящий инструмент и проверьте как работает билд **на целевой платформе**. Исходя из полученных данных примените соответствующие [методы по оптимизации][Analysis]:
+
+- **Снижение нагрузки на CPU**: настройка Матрицы физики ([Layer Collision Matrix][Layer-based collision]); удаление лишних компонентов `Rigidbody`; замена [коллайдеров][Physics Debug] на примитивы (`Sphere`, `Box`) и/или включение параметра `Convex`/`Delaunay`; смена покадровых проверок вроде `Update()` на `Events`; ограничение количества одновременно включённых AI Agents (`NavMesh`); замена `Instantiate()`/`Destroy()` на Object pooling; оптимизация кода и UI (например, система вложенных `Canvas` для разделения фона и анимаций -> [prevent Canvas Rebuild][Frame Debugger])
+- **Снижение нагрузки на GPU**: `Render scale` 0.8-0.9; уменьшение количества рисуемых объектов в одном кадре (Draw Calls): уменьшение [дальности прорисовки][Far clipping plane] (`Camera` > `Clipping Planes` > `Far`), настройка рендеринга (основная нагрузка - Тени, Bloom, SSAO); замена тяжёлых кастомных шейдеров на стандартные; меньше объектов с прозрачностью (Overdraw) -> например, убрать часть слоев у компонента `Terrain`
+- **Перенос с GPU на RAM**: запечка [Occlusion culling][Occlusion culling]; запечка освещения ([Baked Light][Baked Light]); система [Level of Detail (LOD)][Level of Detail]; конвертация `Terrain` в 3-D модель ассетом [Terrain To Mesh][Terrain To Mesh]
+- **Освобождение RAM**: [сжатие текстур][Compressor Texture]; стриминг аудио; удаление лишних уровней LOD (достаточно хорошо настроенных 2-3); использование AssetBundles или Addressables вместо прямой [загрузки ассетов][Runtime asset management]; кэширование данных; очистка памяти (например, в пустой сцене с загрузочным экраном) при помощи `Resources.UnloadUnusedAssets()`
+
+[Analysis]: https://docs.unity3d.com/Manual/analysis.html
+[Layer-based collision]: https://docs.unity3d.com/Manual/LayerBasedCollision.html
+[Physics Debug]: https://docs.unity3d.com/Manual/PhysicsDebugVisualization.html
+[Frame Debugger]: https://docs.unity3d.com/Manual/FrameDebugger-debug.html
+[Far clipping plane]: https://docs.unity3d.com/Manual/UnderstandingFrustum.html
+[Occlusion culling]: https://docs.unity3d.com/Manual/OcclusionCulling.html
+[Baked Light]: https://docs.unity3d.com/Manual/LightModes-introduction.html
+[Level of Detail]: https://docs.unity3d.com/Manual/LevelOfDetail.html
+[Terrain To Mesh]: https://trello.com/c/I964mG8n/37-terrain-optimization
+[Compressor Texture]: https://trello.com/c/6PvnJtNf/27-new-test-tools-convertor-material-compressor-texture-srp-urp-hdrp
+[Runtime asset management]: https://docs.unity3d.com/Manual/assets-managing-introduction.html
+
+???+ example "Профилирование на подключенной консоли"
+
+    ![Nintendo Switch Profiling](../assets/switch-profiling.png)
+
+???+ example "Включите `Mouse Select` для удобного выделения"
+
+    ![Physics Debug Rendering](../assets/physics-debug-rendering.png)
+
+???+ example "Отключите `Show Static Colliders` чтобы найти триггер-зоны"
+
+    ![Physics Debug Filtering](../assets/physics-debug-filtering.png)
+
+???+ example "Проверка покадровой отрисовки для оптимизации UI"
+
+    ![Frame Debugger Window](../assets/frame-debugger.png)
 
 ## Анализ проекта
 

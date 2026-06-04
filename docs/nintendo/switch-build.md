@@ -13,11 +13,12 @@ icon: lucide/hammer
 Самые частые проблемы:
 
 - **Попытка создать файл**: `Error: nn::fs::CreateDirectory() failed because the operation is unsupported` > **[Рефактор Save System]** (замена `persistentDataPath`, `FileStream`)
-- **Превышение используемой RAM**: `Accessed to unmapped memory space` > **Сжатие текстур**, чтобы одна сцена занимала не более **2.9 ГБ** или **рефактор** `Loading Manager`: Сцена 1 > Пустая сцена c отгрузкой `Resources.UnloadUnusedAssets()` и `GC.Collect()` > Сцена 2
+- **Превышение используемой RAM**: `Accessed to unmapped memory space` > **[Сжатие текстур]**, чтобы одна сцена занимала не более **2.9 ГБ** или **рефактор** `Loading Manager`: Сцена 1 > Пустая сцена c отгрузкой `Resources.UnloadUnusedAssets()` и `GC.Collect()` > Сцена 2
 - **Ошибка загрузки ассетов**: `Application has been terminated manually` > **Асинхронная загрузка** по частям или загрузка без **Addressables**
 - **Ссылки на файлы, что были разрушены** или еще не загрузились: `NullReferenceException: Object reference not set to an instance of an object` > Проверка сцен в **Unity Editor** и отладка во время **Play Mode**
 
 [Рефактор Save System]: ../guides/unity.md#saveload-system
+[Сжатие текстур]: ../guides/unity.md#_6
 
 ??? note "Пример поиска отсутствующих скриптов > Добавить в ..\Assets\Editor"
 
