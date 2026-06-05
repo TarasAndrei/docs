@@ -48,6 +48,41 @@ icon: lucide/box
 
     **Опционально**: добавьте по-необходимости **Gamepad**, **Keyboard**, **Mouse** и **Virtual Mouse**.
 
+??? note "Пример вызова метода по нажатию на кнопку (связь с действием из Input Action)"
+
+    ``` CSharp title="InputActionSample.cs"
+    using UnityEngine;
+    using UnityEngine.InputSystem;
+
+    public sealed class InputActionSample : MonoBehaviour
+    {
+        [SerializeField] private InputActionReference _inputAction;
+        
+        private void OnEnable()
+        {
+            if (_inputAction == null) return;
+            _inputAction.action.performed += SomeMethod;
+            _inputAction.action.Enable();
+        }
+        
+        private void OnDisable()
+        {
+            if (_inputAction == null) return;
+            _inputAction.action.performed -= SomeMethod;
+            _inputAction.action.Disable();
+        }
+
+        /// <summary>
+        /// Receives the <see cref="InputAction.CallbackContext"/> from the bound action.
+        /// Replace this body with your own logic.
+        /// </summary>
+        private void SomeMethod(InputAction.CallbackContext context)
+        {
+            Debug.LogError("<color=cyan>SomeMethod triggered</color>");
+        }
+    }
+    ```
+
 Если вы не работали с этим пакетом или не знакомы с основами кросс-платформенного ввода рекоммендую посмотреть официальный туториал от Unity: :fontawesome-brands-youtube:{ .youtube } [YouTube](https://youtu.be/5tOOstXaIKE?si=GkKBFIcOye7RFGBV).
 
 > Подробнее о Input System в [документации Unity](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.19/manual/ActionsEditor.html).
@@ -145,7 +180,7 @@ private async void ResetHaptics()
 
 - В окне **Project** выберите все материалы, которые вы бы хотели поменять
 - Смените шейдер на **Standard (SRP)**
-- Используйте встроенный конвертер для апгрйда: **Edit** > **Rendering** > **Materials** > **Convert Selected Build-in Materials to URP**.
+- Используйте встроенный конвертер для апгрейда: **Edit** > **Rendering** > **Materials** > **Convert Selected Build-in Materials to URP**.
 
 ???+ example "Конвертация Built-in материалов в URP"
 
@@ -178,6 +213,54 @@ private async void ResetHaptics()
 
     На розничной версии первого поколения Nintendo Switch приложению доступно 3,2 ГБ памяти из 4 RAM, но с учетом ~ 0,6 ГБ расходов Unity, основной игре доступно около 2,6 ГБ.
 
+??? note "Пример запуска метода в `MonoBehaviour` по событию"
+
+    ``` CSharp title="OnEventsExecute.cs"
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
+
+    public sealed class OnEventsExecute : MonoBehaviour
+    {
+        [Flags]
+        public enum GameEvent
+        {
+            None = 0,
+            Awake = 1 << 0,
+            Start = 1 << 1,
+            OnEnable = 1 << 2,
+            OnDisable = 1 << 3,
+            OnApplicationFocus = 1 << 4,
+            OnApplicationPause = 1 << 5,
+            OnApplicationQuit = 1 << 6,
+            OnDestroy = 1 << 7,
+        }
+
+        [SerializeField] private GameEvent triggerOn = GameEvent.Awake;
+        [SerializeField] private UnityEvent action;
+
+        /// <summary>
+        /// Checks if <paramref name="e"/> is selected in <see cref="triggerOn"/>.
+        /// If so, logs the event name to the Console and invokes <see cref="action"/>.
+        /// </summary>
+        private void Invoke(GameEvent e)
+        {
+            if ((triggerOn & e) == 0) return;
+            Debug.LogError($"<color=teal>Executed {e}</color>");
+            action.Invoke();
+        }
+
+        private void Awake() => Invoke(GameEvent.Awake);
+        private void Start() => Invoke(GameEvent.Start);
+        private void OnEnable() => Invoke(GameEvent.OnEnable);
+        private void OnDisable() => Invoke(GameEvent.OnDisable);
+        private void OnApplicationFocus(bool hasFocus) { if (hasFocus) Invoke(GameEvent.OnApplicationFocus); }
+        private void OnApplicationPause(bool isPaused) { if (isPaused) Invoke(GameEvent.OnApplicationPause); }
+        private void OnApplicationQuit() => Invoke(GameEvent.OnApplicationQuit);
+        private void OnDestroy() => Invoke(GameEvent.OnDestroy);
+    }
+    ```
+
 [Analysis]: https://docs.unity3d.com/Manual/analysis.html
 [Layer-based collision]: https://docs.unity3d.com/Manual/LayerBasedCollision.html
 [Physics Debug]: https://docs.unity3d.com/Manual/PhysicsDebugVisualization.html
@@ -192,7 +275,7 @@ private async void ResetHaptics()
 
 Сделайте билд с галочкой `Development` и [подключите консоль к ПК][Target Manager]. Установите и запустите приложение, далее выберите цель в окне **Profiler** (++ctrl+7++):
 
-[Target Manager]: ../docs/nintendo/switch-target-manager.md
+[Target Manager]: ../nintendo/switch-target-manager.md
 
 ???+ example "Профилирование на подключенной консоли"
 
