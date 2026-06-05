@@ -67,6 +67,8 @@ icon: lucide/rocket
 Приоритеты **при написании кода**:
 
 1. Простота
-2. Корректность (соответствие стандартам)
+2. Корректность ([соответствие стандартам][Code Conventions])
 3. Универсальность
 4. Оптимизация
+
+[Code Conventions]: https://unity.com/how-to/naming-and-code-style-tips-c-scripting-unity

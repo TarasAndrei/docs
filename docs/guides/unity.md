@@ -35,9 +35,9 @@ icon: lucide/box
 
 ## Настройка Input System
 
-Если в проекте используется **Unity Input System** - добавьте соответствующий платформе пакет в папку `..\Packages` из папки с установленным SDK:
+Если в проекте используется **Unity Input System** - добавьте **соответствующий** платформе и **версии Unity проекта** пакет в папку `..\Packages` из папки с установленным SDK:
 
-- Откройте `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\UnityForNintendoSwitch\Packages`
+- Например, откройте `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\UnityForNintendoSwitch\Packages`
 - Скопируйте папку `com.unity.inputsystem.switch@0.1.7-pre`
 - Откройте `C:\Work\Project_Name\Packages`
 - Вставьте папку и дождитесь рекомпилляции проекта
@@ -86,6 +86,10 @@ private async void ResetHaptics()
 ## Рефакторинг Save/Load System
 
 На платформах **PC** и **PlayStation** сохранение и загрузка прогресса выполняются через `PlayerPrefs` или ассет Easy Save (ES3). Для **Nintendo Switch** все вызовы `PlayerPrefs` должны быть заменены на `SaveBridge` или `SwitchPrefs`.
+
+Иногда ассеты загружаются не прямым вызовом метода, а при помощи [аттрибута](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html).
+
+> Подробнее о порядке вызова [системных методов Unity](https://docs.unity3d.com/Manual/execution-order.html).
 
 ## Адаптация UX/UI
 
@@ -139,9 +143,13 @@ private async void ResetHaptics()
 
 Чтобы перевести материалы, **шейдеры которых не поддерживают URP**:
 
-- В окне **Project** выберите все материалы, которые вы бы хотели поменять (при помощи фильтра)
+- В окне **Project** выберите все материалы, которые вы бы хотели поменять
 - Смените шейдер на **Standard (SRP)**
 - Используйте встроенный конвертер для апгрйда: **Edit** > **Rendering** > **Materials** > **Convert Selected Build-in Materials to URP**.
+
+???+ example "Конвертация Built-in материалов в URP"
+
+    ![Material Filter](../assets/convert-materials.png)
 
 !!! note
 
@@ -161,10 +169,14 @@ private async void ResetHaptics()
 
 Выберите подходящий инструмент и проверьте как работает билд **на целевой платформе**. Исходя из полученных данных примените соответствующие [методы по оптимизации][Analysis]:
 
-- **Снижение нагрузки на CPU**: настройка Матрицы физики ([Layer Collision Matrix][Layer-based collision]); удаление лишних компонентов `Rigidbody`; замена [коллайдеров][Physics Debug] на примитивы (`Sphere`, `Box`) и/или включение параметра `Convex`/`Delaunay`; смена покадровых проверок вроде `Update()` на `Events`; ограничение количества одновременно включённых AI Agents (`NavMesh`); замена `Instantiate()`/`Destroy()` на Object pooling; оптимизация кода и UI (например, система вложенных `Canvas` для разделения фона и анимаций -> [prevent Canvas Rebuild][Frame Debugger])
+- **Снижение нагрузки на CPU**: настройка Матрицы физики ([Layer Collision Matrix][Layer-based collision]); удаление лишних компонентов `Rigidbody`; замена [коллайдеров][Physics Debug] на примитивы (`Sphere`, `Box`) и/или включение параметра `Convex`/`Delaunay`; смена покадровых проверок вроде `Update()` на `Events`; ограничение количества одновременно включённых AI Agents (`NavMesh`); замена `Instantiate()`/`Destroy()` на Object Pooling; оптимизация кода и UI (например, система вложенных `Canvas` для разделения фона и анимаций -> [prevent Canvas Rebuild][Frame Debugger])
 - **Снижение нагрузки на GPU**: `Render scale` 0.8-0.9; уменьшение количества рисуемых объектов в одном кадре (Draw Calls): уменьшение [дальности прорисовки][Far clipping plane] (`Camera` > `Clipping Planes` > `Far`), настройка рендеринга (основная нагрузка - Тени, Bloom, SSAO); замена тяжёлых кастомных шейдеров на стандартные; меньше объектов с прозрачностью (Overdraw) -> например, убрать часть слоев у компонента `Terrain`
 - **Перенос с GPU на RAM**: запечка [Occlusion culling][Occlusion culling]; запечка освещения ([Baked Light][Baked Light]); система [Level of Detail (LOD)][Level of Detail]; конвертация `Terrain` в 3-D модель ассетом [Terrain To Mesh][Terrain To Mesh]
 - **Освобождение RAM**: [сжатие текстур][Compressor Texture]; стриминг аудио; удаление лишних уровней LOD (достаточно хорошо настроенных 2-3); использование AssetBundles или Addressables вместо прямой [загрузки ассетов][Runtime asset management]; кэширование данных; очистка памяти (например, в пустой сцене с загрузочным экраном) при помощи `Resources.UnloadUnusedAssets()`
+
+!!! note
+
+    На розничной версии первого поколения Nintendo Switch приложению доступно 3,2 ГБ памяти из 4 RAM, но с учетом ~ 0,6 ГБ расходов Unity, основной игре доступно около 2,6 ГБ.
 
 [Analysis]: https://docs.unity3d.com/Manual/analysis.html
 [Layer-based collision]: https://docs.unity3d.com/Manual/LayerBasedCollision.html
@@ -178,17 +190,25 @@ private async void ResetHaptics()
 [Compressor Texture]: https://trello.com/c/6PvnJtNf/27-new-test-tools-convertor-material-compressor-texture-srp-urp-hdrp
 [Runtime asset management]: https://docs.unity3d.com/Manual/assets-managing-introduction.html
 
+Сделайте билд с галочкой `Development` и [подключите консоль к ПК][Target Manager]. Установите и запустите приложение, далее выберите цель в окне **Profiler** (++ctrl+7++):
+
+[Target Manager]: ../docs/nintendo/switch-target-manager.md
+
 ???+ example "Профилирование на подключенной консоли"
 
     ![Nintendo Switch Profiling](../assets/switch-profiling.png)
 
-???+ example "Включите `Mouse Select` для удобного выделения"
+Для проверки физики на сцене откройте **Window** > **Analysis** > **Physics Debugger**:
+
+???+ example "Включите `Gizmos` и `Mouse Select` в окне `Scene` для удобного выделения"
 
     ![Physics Debug Rendering](../assets/physics-debug-rendering.png)
 
 ???+ example "Отключите `Show Static Colliders` чтобы найти триггер-зоны"
 
     ![Physics Debug Filtering](../assets/physics-debug-filtering.png)
+
+Пошаговый анализ отрисовки кадра доступен в **Window** > **Analysis** > **Frame Debugger**:
 
 ???+ example "Проверка покадровой отрисовки для оптимизации UI"
 

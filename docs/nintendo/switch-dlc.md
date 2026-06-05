@@ -15,7 +15,7 @@ icon: lucide/blocks
 Билд **.nsp** файла-ключа для **AddOnContent** создается через командную строку:
 
 - Нажмите ++win+r++ > введите `CMD` > ++enter++
-- Введите команду по шаблону: **AuthoringTool** > **"Путь для билда"** > **"Путь к \_DLC_Project_Name.nmeta"**
+- Введите команду по шаблону: **версия Unity проекта**\\**AuthoringTool** > **"Путь для билда"** > **"Путь к \_DLC_Project_Name.nmeta"**
 
 ``` CSharp title="Пример команды для CMD"
 C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\NintendoSDK\Tools\CommandLineTools\AuthoringTool\AuthoringTool.exe creatensp -o "C:\Builds\_DLC_Project_Name.nsp" --save-adf --type AddOnContent --meta "C:\Work\Project_Name\_DLC_Project_Name.nmeta"
