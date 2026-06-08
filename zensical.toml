@@ -63,7 +63,13 @@ nav = [
      "qa/quality-assurance.md"
   ]},
     {"Guides" = [
-     "guides/unity.md"
+     "guides/crash-handling.md",
+     "guides/managing-inputs.md",
+     "guides/refactoring-save-load.md",
+     "guides/graphics-optimization.md",
+     "guides/adapting-the-ui.md",
+     "guides/git-versioning.md",
+     "guides/unity-from-zero.md"
   ]}
 ]
 # With the "extra_css" option you can add your own CSS styling to customize
