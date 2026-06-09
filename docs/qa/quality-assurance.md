@@ -18,7 +18,7 @@ icon: lucide/bug
 Приложение **не должно** выполнять запись данных в память консоли чаще **32** раз в минуту. Перед отправкой финального билда проверьте этот пункт при помощи **FsAccessLogChecker**:
 
 - Нажмите ++win+r++ > введите `CMD` > ++enter++
-- Перетащите в окно командной строки **FsAccessLogChecker** из папки `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\NintendoSDK\Tools\FsAccessLogChecker`
+- Перетащите в окно командной строки **FsAccessLogChecker** версии Unity проекта: `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\NintendoSDK\Tools\FsAccessLogChecker`
 - Поставьте пробел нажав клавишу ++space++
 - Перетащите в окно командной строки ваш файл **FsAccessLog.txt**
 - Нажмите ++enter++

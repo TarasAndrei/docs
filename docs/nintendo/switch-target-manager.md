@@ -4,7 +4,7 @@ icon: lucide/cable
 
 # Nintendo Connection
 
-Для подключения консоли к ПК, установки билдов, просмотра логов и отладки требуется Nintendo Target Manager 2.
+Для подключения консоли к ПК, установки билдов, просмотра логов и отладки требуется _Nintendo Target Manager 2._
 
 > Подробнее в [документации](https://docs.google.com/document/d/1HV6m-sbHxcaxTkMmuLgYDzqUn6KpCzG5/edit?usp=sharing&ouid=108020388252141246965&rtpof=true&sd=true).
 

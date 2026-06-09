@@ -4,6 +4,22 @@ icon: lucide/app-window
 
 # Adapting the UI
 
+## Меню Controls
+
+В интерфейсе игры должна быть схема управления, обычно называемая _Tutorial_ или _Controls_. Как правило, её располагают **в Главном меню**, а также в UI для **меню Паузы**.
+
+Для создания или замены существующего изображения используйте наш [Figma UI Kit]. Ниже приведены примеры как может выглядеть готовый результат:
+
+[Figma UI Kit]: https://trello.com/c/NKDdRVnl/50-nintendo-ui-kit-button-icons
+
+???+ example "Открытое меню Tutorial с возвратом при нажатии на стрелку <-"
+
+    ![Tutorial Sample Image](../assets/tutorial-sample.png)
+
+???+ example "Открытое меню Controls с возвратом при нажатии на кнопку B"
+
+    ![Controls Sample Image](../assets/controls-sample.png)
+
 ## Адаптация UX/UI
 
 Обратите внимание, что пропорции экранов могут отличаться в зависимости от режима работы устройства. **Nintendo Switch** использует разрешение 1280×720 в Handheld Mode и 1920×1080 в TV Mode. **Проверяйте отображение интерфейса при разных разрешениях** и включайте параметр `Preserve Aspect` у компонентов `Image` с типом `Sprite (2D and UI)`.

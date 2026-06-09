@@ -14,9 +14,15 @@ icon: lucide/hammer
 
 ## Начальный экран при запуске игры
 
-Для кастомизации или отключения [заставки при запуске игры](https://docs.unity3d.com/Manual/class-PlayerSettingsSplashScreen.html) (логотипа Unity):
+Для кастомизации или отключения [заставки при запуске игры][Splash Screen] (логотипа Unity):
 
 - Откройте окно **Edit** > **Project Settings** > **Player** > **Splash Image**
-- Смените настройки для платформы **PC** (Windows, Mac, Linux settings)
+- Смените настройки для платформы **Standalone** (Windows, Mac, Linux)
 - Проверьте результат нажав кнопку **Preview**
-- Билды для консолей унаследуют выставленные параметры
+- Закройте редактор **Unity** и сделайте коммит (_ProjectSettings.asset_)
+
+[Splash Screen]: https://docs.unity3d.com/Manual/class-PlayerSettingsSplashScreen.html
+
+!!! note
+
+    Билды для консолей наследуют выставленные параметры `Splash Screen`

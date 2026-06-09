@@ -66,9 +66,15 @@ icon: lucide/rocket
 
 Приоритеты **при написании кода**:
 
-1. Простота
-2. Корректность ([соответствие стандартам][Code Conventions])
-3. Универсальность
-4. Оптимизация
+1. Простота ([KISS], [YAGNI])
+2. Корректность ([Coding conventions])
+3. Универсальность ([DRY])
+4. Оптимизация ([SOLID], [TDA])
 
-[Code Conventions]: https://unity.com/how-to/naming-and-code-style-tips-c-scripting-unity
+[Coding conventions]: https://unity.com/how-to/naming-and-code-style-tips-c-scripting-unity
+
+[KISS]: https://en.wikipedia.org/wiki/KISS_principle
+[YAGNI]: https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it
+[DRY]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself
+[SOLID]: https://en.wikipedia.org/wiki/SOLID
+[TDA]: https://medium.com/@hlfdev/kiss-dry-solid-yagni-a-simple-guide-to-some-principles-of-software-engineering-and-clean-code-05e60233c79f
