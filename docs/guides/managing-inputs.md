@@ -6,7 +6,7 @@ icon: lucide/file-cog
 
 ## Настройка Input System
 
-Если в проекте используется **Unity Input System** - добавьте **соответствующий** платформе и **версии Unity проекта** пакет в папку `..\Packages` из папки с установленным SDK:
+Если в проекте используется **Unity Input System** - добавьте **соответствующий платформе** и **версии Unity проекта** пакет в папку `..\Packages` из папки с установленным SDK:
 
 - Например, откройте `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\UnityForNintendoSwitch\Packages`
 - Скопируйте папку `com.unity.inputsystem.switch@0.1.7-pre`

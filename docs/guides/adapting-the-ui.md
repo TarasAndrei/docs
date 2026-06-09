@@ -12,7 +12,7 @@ icon: lucide/app-window
 
 [Figma UI Kit]: https://trello.com/c/NKDdRVnl/50-nintendo-ui-kit-button-icons
 
-???+ example "Открытое меню Tutorial с возвратом при нажатии на стрелку <-"
+???+ example "Открытое меню Tutorial с возвратом при нажатии на стрелку"
 
     ![Tutorial Sample Image](../assets/tutorial-sample.png)
 

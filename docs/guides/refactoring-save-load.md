@@ -4,29 +4,33 @@ icon: lucide/square-terminal
 
 # Refactoring Save/Load
 
-## Рефакторинг Save/Load System
+## Save/Load System
 
 На платформах **Standalone (ПК)** и **PlayStation** сохранение и загрузка прогресса выполняются через `PlayerPrefs` или ассет Easy Save (ES3). Для **Nintendo Switch** все вызовы `PlayerPrefs` должны быть заменены на `SaveBridge` или `SwitchPrefs`.
 
 !!! note
 
-    Иногда ассеты загружаются не прямым вызовом метода, а при помощи [аттрибута](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html).
+    Иногда ассеты загружаются на фоне при помощи [аттрибута][Attribute] `[RuntimeInitializeOnLoadMethod]`.
 
-> Подробнее о порядке вызова [системных методов Unity](https://docs.unity3d.com/Manual/execution-order.html).
+    > Подробнее о порядке вызова [системных методов Unity](https://docs.unity3d.com/Manual/execution-order.html).
 
-## Старые проекты версий 202X (Unity 5)
+[Attribute]: https://docs.unity3d.com/6000.4/Documentation/ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html
 
-Для апгрейда до Unity 6 старых проектов с уже интегрированным пакетом `PlayerPrefs_Switch` рекоммендуется использовать пакет `SwitchPrefs`.
+## Проекты на Unity 202X
+
+Для апгрейда c версий Unity 5 до Unity 6 проектов с уже интегрированным пакетом `PlayerPrefs_Switch` рекоммендуется использовать пакет `SwitchPrefs`.
 
 > Подробнее в [документации][SwitchPrefs].
 
 [SwitchPrefs]: https://trello.com/c/ElZ4C5dq/65-switch-player-prefsunity-6-to-switchprefs
 
-## Новые проекты на Unity 6
+## Проекты на Unity 6
 
 Для рефактора новых проектов можно использовать `SwitchPrefs` или `SaveBridge`.
 
-Обратите внимание, что в случае с `SaveBridge` названия методов немного изменятся. Так, `PlayerPrefs.GetInt` станет `SaveBridge.GetIntPP`, `PlayerPrefs.SetInt` > `SaveBridge.SetIntPP` и, по-аналогии то же самое с `Int/Float/String/Key`. Пример можно найти в файле `SaveBridge.cs`, в регионе _PlayerPrefs Helper_.
+Обратите внимание, что в случае с `SaveBridge` названия методов немного изменятся. Так, `PlayerPrefs.GetInt` станет `SaveBridge.GetIntPP`, `PlayerPrefs.SetInt` > `SaveBridge.SetIntPP` и, по-аналогии, то же самое с `Int/Float/String/Key`.
+
+Пример можно найти в файле `SaveBridge.cs`, в регионе PlayerPrefs Helper.
 
 !!! warning
 
@@ -64,6 +68,10 @@ icon: lucide/square-terminal
 ???+ example "Find and Replace > Replace in Files > All open documents > Replace All"
 
     ![Visual Studio Replace](../assets/vs-replace-all.png)
+
+!!! tip
+
+    После завершения проверьте возможные ошибки компиляции нажав ++ctrl+shift+b++.
 
 ## Тесты методов в Unity Editor
 
