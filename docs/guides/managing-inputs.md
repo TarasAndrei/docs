@@ -58,6 +58,33 @@ icon: lucide/file-cog
 
 > Подробнее о Input System в [документации Unity](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.19/manual/ActionsEditor.html).
 
+## Rewired Input System
+
+Если в вашем проекте уже установлен ассет **Rewired** - добавьте **соответствующий платформе** и **версии Unity проекта** пакет (папку _Plugins_) в `..\Assets\Rewired`. Далее, следуйте шагам, указанным в  [документации][Rewired Input]:
+
+- Создайте сцену с названием `SplashScene`
+- Добавьте пустой объект `LoadNDI` с `LoadNDI.cs`
+- Добавьте `RewiredEventSystem.prefab` с `DontDestroyOnLoad.cs`
+- Создайте `NintendoSwitchInputManager` нажатием на кнопку
+- Измените **Supported Npad Styles** на **Nothing** в настройках **Player**
+- Настройте в Rewired `Input Manager`, `Player`, `Actions` и `Maps`
+- Присвойте **Rewired Player** соответствующие `Maps`
+- Замените `Input.GetMouseButtonDown(0)` > `_player.GetButtonDown("Submit")`
+
+[Rewired Input]: https://trello.com/c/KgRB46zb/42-rewired
+
+???+ example "Пример расположения кнопок для Nintendo Switch"
+
+    ![Rewired Gamepad](../assets/rewired-gamepad.png)
+
+> Подробнее о настройке Rewired в [документации Rewired](https://guavaman.com/projects/rewired/docs/QuickStart.html).
+
+### Интеграция Rewired в RCC
+
+Если проект использует старые версии ассета [Realistic Car Controller] с **Rewired Input** - добавьте поддержку платформы **Nintendo Switch** по примеру из [документации](https://trello.com/c/40nJGa59/8-integration-rewired-to-rcc).
+
+[Realistic Car Controller]: https://www.bonecrackergames.com/realistic-car-controller/
+
 ## Вибрация для контроллера
 
 Вибрацию в играх с поддержкой **Unity Input System** как правило добавляют так:
@@ -88,3 +115,27 @@ private async void ResetHaptics()
     Gamepad.current.ResetHaptics();
 }
 ```
+
+## Попап Joy-Con Grip
+
+Для отображения попапа с текстом `The Joy-Con Grip Accessory is Recommended when Playing` **при смене режима игры** (например, с `Handheld` на `Tabletop`) - добавьте пакет [`CheckNintendoInputSingle.unitypackage`][Input Nintendo Check] в папку `..\Assets\_Nintendo`.
+
+По-необходимости, дизайн `Warning_JOY-CON.prefab` можно поменять в соответствии с Figma. Найти его можно в папке проекта и далее `..\Assets\Resources`.
+
+[Input Nintendo Check]: https://trello.com/c/AGXNzLx1/13-input-nintendo-check
+
+### Частые проблемы
+
+Если после установки пакета попап **не появляется**:
+
+- Выставьте `Sort Order` для компонента `Canvas` на **32767** (в `Warning_JOY-CON.prefab`)
+- Проверьте чтобы ничего не разрушало его в рантайме (`Resources.UnloadUnusedAssets()`)
+
+## Отключение Touch Screen
+
+Чтобы отключить сенсорный экран:
+
+- Перейдите в **Edit** > **Project Settings** > **Player**
+- Откройте раздел **Other Settings** на нужной платформе
+- Пролистайте вниз до **Controls** и отключите чекбокс `Enable Touch Screen`
+- Закройте редактор **Unity** и сделайте коммит (_ProjectSettings.asset_)

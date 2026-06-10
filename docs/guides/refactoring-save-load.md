@@ -24,6 +24,19 @@ icon: lucide/square-terminal
 
 [SwitchPrefs]: https://trello.com/c/ElZ4C5dq/65-switch-player-prefsunity-6-to-switchprefs
 
+### Частые проблемы
+
+Если после установки пакета в редакторе Unity появилась ошибка: `The type or namespace name "Newtonsoft" could not be found`:
+
+- Откройте окно **Window** > **Package Management** > **Package Manager**
+- Переключитесь на вкладку **Unity Registry**
+- Нажмите на **(+)** в левом верхнем углу и выберите `Install package from git URL...`
+- Введите в поле `com.unity.nuget.newtonsoft-json` и нажмите `Install`
+
+??? example "Пример установки пакета Newtonsoft"
+
+    ![Newtonsoft Json](../assets/newtonsoft-json.png)
+
 ## Проекты на Unity 6
 
 Для рефактора новых проектов можно использовать `SwitchPrefs` или `SaveBridge`.
@@ -65,7 +78,7 @@ icon: lucide/square-terminal
 - Заменить эту строку на новую, поменяв настройку поиска на `All open documents`
 - Повторить `поиск` > `замену` с другими методами `PlayerPrefs` (`Float/String/Key`)
 
-???+ example "Find and Replace > Replace in Files > All open documents > Replace All"
+??? example "Find and Replace > Replace in Files > All open documents > Replace All"
 
     ![Visual Studio Replace](../assets/vs-replace-all.png)
 
