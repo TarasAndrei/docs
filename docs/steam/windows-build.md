@@ -19,3 +19,7 @@ icon: lucide/hammer
 - Проверьте поле **Company Name** в настройках **Unity Editor** > **Project Settings** > **Player**
 - Нажмите ++win+r++ > введите `regedit` > ++enter++
 - Найдите и удалите соответствующую папку в `Computer\HKEY_CURRENT_USER\SOFTWARE\Company Name\Product Name`
+
+??? example "Пример открытого окна Registry Editor"
+
+    ![Registry Editor](../assets/registry-editor.png)

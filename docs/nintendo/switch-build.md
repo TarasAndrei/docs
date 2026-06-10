@@ -26,3 +26,7 @@ icon: lucide/hammer
 !!! note
 
     Билды для консолей наследуют выставленные параметры `Splash Screen`.
+
+??? example "Пример примененной настройки"
+
+    ![Splash Image](../assets/splash-screen.png)

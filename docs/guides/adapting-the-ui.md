@@ -12,7 +12,7 @@ icon: lucide/app-window
 
 [Figma UI Kit]: https://trello.com/c/NKDdRVnl/50-nintendo-ui-kit-button-icons
 
-???+ example "Открытое меню Tutorial с возвратом при нажатии на стрелку"
+??? example "Открытое меню Tutorial с возвратом при нажатии на стрелку"
 
     ![Tutorial Sample Image](../assets/tutorial-sample.png)
 
@@ -24,7 +24,9 @@ icon: lucide/app-window
 
 Обратите внимание, что пропорции экранов могут отличаться в зависимости от режима работы устройства. **Nintendo Switch** использует разрешение 1280×720 в Handheld Mode и 1920×1080 в TV Mode. **Проверяйте отображение интерфейса при разных разрешениях** и включайте параметр `Preserve Aspect` у компонентов `Image` с типом `Sprite (2D and UI)`.
 
-Также, можно настроить [пресет](https://docs.unity3d.com/Manual/class-PresetManager.html) чтобы любые загружаемые изображения автоматически становились `Sprite (2D and UI)` с параметром `Single`.
+Также, можно настроить [пресет][Texture Preset] чтобы любые загружаемые изображения автоматически становились `Sprite (2D and UI)` с параметром `Single`.
+
+[Texture Preset]: https://docs.unity3d.com/Manual/class-PresetManager.html
 
 ???+ example "Пример настроенного пресета"
 
