@@ -53,7 +53,7 @@ icon: lucide/file-sliders
 Выберите подходящий инструмент и проверьте как работает билд **на целевой платформе**. Исходя из полученных данных примените соответствующие [методы по оптимизации][Analysis]:
 
 - **Снижение нагрузки на CPU**: настройка Матрицы физики ([Layer Collision Matrix][Layer-based collision]); удаление лишних компонентов `Rigidbody`; замена [коллайдеров][Physics Debug] на примитивы (`Sphere`, `Box`) и/или включение параметра `Convex`/`Delaunay`; смена покадровых проверок вроде `Update()` на `Events`; ограничение количества одновременно включённых AI Agents (`NavMesh`); замена `Instantiate()`/`Destroy()` на Object Pooling; оптимизация кода и UI (например, система вложенных `Canvas` для разделения фона и анимаций -> [prevent Canvas Rebuild][Frame Debugger])
-- **Снижение нагрузки на GPU**: `Render scale` 0.8-0.9; уменьшение количества рисуемых объектов в одном кадре (Draw Calls): уменьшение [дальности прорисовки][Far clipping plane] (`Camera` > `Clipping Planes` > `Far`), настройка рендеринга (основная нагрузка - Тени, Bloom, SSAO); замена тяжёлых кастомных шейдеров на стандартные; меньше объектов с прозрачностью (Overdraw) -> например, убрать часть слоев у компонента `Terrain`
+- **Снижение нагрузки на GPU**: `Render scale` 0.8-0.9; уменьшение количества рисуемых объектов в одном кадре (Draw Calls): уменьшение [дальности прорисовки][Far clipping plane] (`Camera` > `Clipping Planes` > `Far`), настройка рендеринга (основная нагрузка - Тени, Bloom, SSAO); замена тяжёлых кастомных шейдеров на стандартные (часто решает проблему с RAM); меньше объектов с прозрачностью (Overdraw) -> например, убрать часть слоев у компонента `Terrain`
 - **Перенос с GPU на RAM**: запечка [Occlusion culling][Occlusion culling]; запечка освещения ([Baked Light][Baked Light]); система [Level of Detail (LOD)][Level of Detail]; конвертация `Terrain` в 3-D модель ассетом [Terrain To Mesh][Terrain To Mesh]
 - **Освобождение RAM**: [сжатие текстур][Compressor Texture]; стриминг аудио; удаление лишних уровней LOD (достаточно хорошо настроенных 2-3); использование AssetBundles или Addressables вместо прямой [загрузки ассетов][Runtime asset management]; кэширование данных; очистка памяти (например, в пустой сцене с загрузочным экраном) при помощи `Resources.UnloadUnusedAssets()`
 
@@ -67,7 +67,7 @@ icon: lucide/file-sliders
 
 ??? note "Пример запуска метода в `MonoBehaviour` по событию"
 
-    ``` CSharp title="OnEventsExecute.cs"
+    ``` CSharp title="OnEventsExecute.cs" linenums="1"
     using System;
     using UnityEngine;
     using UnityEngine.Events;

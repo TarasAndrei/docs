@@ -10,7 +10,7 @@ icon: lucide/square-terminal
 
 !!! note
 
-    Иногда ассеты загружаются на фоне при помощи [аттрибута][Attribute] `[RuntimeInitializeOnLoadMethod]`.
+    Иногда ассеты загружаются на фоне при помощи [атрибута][Attribute] `[RuntimeInitializeOnLoadMethod]`.
 
     > Подробнее о порядке вызова [системных методов Unity](https://docs.unity3d.com/Manual/execution-order.html).
 
@@ -52,6 +52,7 @@ icon: lucide/square-terminal
 ??? note "Пример метода SaveBridge.DeleteAllPP"
 
     ``` CSharp title="Добавьте в SaveBridge.cs"
+        // SaveBridge.DeleteAllPP
         public static void DeleteAllPP()
         {
     #if UNITY_SWITCH && !UNITY_EDITOR
@@ -85,6 +86,108 @@ icon: lucide/square-terminal
 !!! tip
 
     После завершения проверьте возможные ошибки компиляции нажав ++ctrl+shift+b++.
+
+### Открытие Паузы при нажатии на HOME
+
+В некоторых проектах, где прогресс игрока может быть нарушен при сворачивании игры нажатием на кнопку **HOME** (домик), необходимо добавить открытие меню **Pause** в момент перехода приложения в _фоновой режим_.
+
+Для этого, подпишитесь на `OnBackground` в классе, что отвечает за включение меню Паузы. Сам `event` находится в `SwitchExitHandling.cs` или `SwitchHandlerMessage.cs`:
+
+``` CSharp
+public class PauseManager : MonoBehaviour
+{
+    private void OnEnable()
+    {
+        SwitchExitHandling.OnBackground += PauseGame;
+    }
+
+    private void OnDisable()
+    {
+        SwitchExitHandling.OnBackground -= PauseGame;
+    }
+
+    public void PauseGame()
+    {
+        // Pause logic
+    }
+}
+```
+
+??? note "Пример подписки на OnBackground"
+
+    ``` CSharp title="PauseManager.cs" linenums="1"
+        using UnityEngine;
+        using System.Collections;
+
+        public class PauseManager : MonoBehaviour
+        {
+            public static PauseManager Instance;
+
+            public bool IsPaused { get; private set; }
+
+            private void Awake()
+            {
+                if (Instance == null)
+                {
+                    Instance = this;
+                }
+            }
+
+            private void OnEnable()
+            {
+                SwitchExitHandling.OnBackground += PauseGame;
+            }
+            private void OnDisable()
+            {
+                SwitchExitHandling.OnBackground -= PauseGame;
+            }
+
+            public void PauseGame()
+            {
+                if (IsPaused) return;
+
+                IsPaused = true;
+                Time.timeScale = 0f;
+
+                if (InputManager.PlayerInput != null)
+                {
+                    InputManager.PlayerInput.SwitchCurrentActionMap("UI");
+                }
+            }
+
+            public void UnpauseGame()
+            {
+                if (!IsPaused) return;
+
+                IsPaused = false;
+                Time.timeScale = 1f;
+
+                StartCoroutine(ResumeInputSafely());
+            }
+
+            private IEnumerator ResumeInputSafely()
+            {
+                yield return null;
+
+                if (InputManager.PlayerInput != null)
+                {
+                    try
+                    {
+                        InputManager.PlayerInput.SwitchCurrentActionMap("Player");
+                        Debug.Log("Game resumed successfully");
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogError($"Error resuming input: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("InputManager.PlayerInput is NULL when trying to resume!");
+                }
+            }
+        }
+    ```
 
 ## Тесты методов в Unity Editor
 

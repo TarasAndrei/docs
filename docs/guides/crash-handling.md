@@ -10,7 +10,7 @@ icon: lucide/bug-play
 
 - **Попытка создать файл**: `Error: nn::fs::CreateDirectory() failed because the operation is unsupported` > **[Рефактор Save System]** (замена `persistentDataPath`, `FileStream`)
 - **Превышение используемой RAM**: `Accessed to unmapped memory space` > **[Сжатие текстур]**, чтобы одна сцена занимала не более **2.6** ГБ или **рефактор** `Loading Manager`: Сцена 1 > Пустая сцена c отгрузкой `Resources.UnloadUnusedAssets()` и `GC.Collect()` > Сцена 2
-- **Ошибка загрузки ассетов**: `Application has been terminated manually` > **Асинхронная загрузка** по частям или загрузка без **Addressables**
+- **Ошибка загрузки ассетов или вызова метода**: `Application has been terminated manually` > **Асинхронная загрузка** по частям или загрузка без **Addressables**
 - **Ссылки на файлы, что были разрушены** или еще не загрузились: `NullReferenceException: Object reference not set to an instance of an object` > Проверка сцен в **Unity Editor** и отладка во время **Play Mode**
 
 [Рефактор Save System]: ../guides/refactoring-save-load.md
@@ -18,7 +18,7 @@ icon: lucide/bug-play
 
 ??? note "Пример поиска отсутствующих скриптов > Добавить в ..\Assets\Editor"
 
-    ``` CSharp title="FindMissingScripts.cs"
+    ``` CSharp title="FindMissingScripts.cs" linenums="1"
     using UnityEngine;
     using UnityEditor;
     using System.Collections.Generic;
@@ -60,7 +60,7 @@ icon: lucide/bug-play
             }
             else
             {
-                Debug.Log("No GameObjects in '" + currentScene.name + "' have missing scripts! Yay!");
+                Debug.Log("No GameObjects in '" + currentScene.name + "' have missing scripts!");
             }
         }
     }

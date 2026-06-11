@@ -21,7 +21,7 @@ icon: lucide/file-cog
 
 ??? note "Пример вызова метода по нажатию на кнопку (связь с действием из Input Action)"
 
-    ``` CSharp title="InputActionSample.cs"
+    ``` CSharp title="InputActionSample.cs" linenums="1"
     using UnityEngine;
     using UnityEngine.InputSystem;
 
@@ -60,7 +60,9 @@ icon: lucide/file-cog
 
 ## Rewired Input System
 
-Если в вашем проекте уже установлен ассет **Rewired** - добавьте **соответствующий платформе** и **версии Unity проекта** пакет (папку _Plugins_) в `..\Assets\Rewired`. Далее, следуйте шагам, указанным в  [документации][Rewired Input]:
+Если в вашем проекте уже установлен ассет **Rewired** - добавьте **соответствующий платформе** и **версии Unity проекта** пакет (папку _Plugins_) в `..\Assets\Rewired`.
+
+Далее, следуйте шагам, указанным в  [документации][Rewired Input]:
 
 - Создайте сцену с названием `SplashScene`
 - Добавьте пустой объект `LoadNDI` с `LoadNDI.cs`
@@ -130,6 +132,16 @@ private async void ResetHaptics()
 
 - Выставьте `Sort Order` для компонента `Canvas` на **32767** (в `Warning_JOY-CON.prefab`)
 - Проверьте чтобы ничего не разрушало его в рантайме (`Resources.UnloadUnusedAssets()`)
+
+## Фильтр матов в Input Field
+
+Если в проекте есть возможность вписывать текст в `Input Field` - необходимо изменить его `ContentType` на `Alphanumeric` и реализовать [фильтр][Check Profanity] для нецензурных слов.
+
+[Check Profanity]: https://trello.com/c/mCRuUhHb/4-online-multiplayer-network-check-check-profanity-loadndi-ndiloadmenu
+
+??? example "Пример настройки Input Field (TMP)"
+
+    ![Input Field](../assets/input-field.png)
 
 ## Отключение Touch Screen
 
