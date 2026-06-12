@@ -135,9 +135,61 @@ private async void ResetHaptics()
 
 ## Фильтр матов в Input Field
 
-Если в проекте есть возможность вписывать текст в `Input Field` - необходимо изменить его `ContentType` на `Alphanumeric` и реализовать [фильтр][Check Profanity] для нецензурных слов.
+Если в проекте есть возможность вписывать текст в `Input Field` - необходимо изменить его `ContentType` на `Alphanumeric` и реализовать фильтр для нецензурных слов.
+
+Пример валидации ввода:
+
+- Добавьте в проект [`NintendoCheckProfanity.cs`][Check Profanity]
+- Вызовите метод `HasProfanity()` после подтверждения ввода
+- Если метод возвращает `true`, очистите поле и покажите попап с ошибкой (например, `"Please avoid offensive words"`)
 
 [Check Profanity]: https://trello.com/c/mCRuUhHb/4-online-multiplayer-network-check-check-profanity-loadndi-ndiloadmenu
+
+??? note "Пример валидации текста"
+
+    ``` CSharp
+    public void OnSubmitInput(string text)
+    {
+        if (HasProfanity(text))
+        {
+            StartCoroutine(HandleProfanityDetected());
+            return;
+        }
+
+        // Input OK, continue...
+    }
+
+    private bool HasProfanity(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input)) return false;
+
+    #if UNITY_SWITCH
+        return !NintendoCheckProfanity.CheckProfanityWordsSample(input);
+    #else
+        string[] bannedWords = { "badword1", "badword2", "badword3" };
+        string lowerInput = input.ToLower();
+
+        foreach (string word in bannedWords)
+        {
+            if (lowerInput.Contains(word))
+            {
+                return true; // Profanity detected
+            }
+        }
+        return false; // Clean text
+    #endif
+    }
+
+    private IEnumerator HandleProfanityDetected()
+    {
+        roomNameInputField.text = string.Empty;
+        invalidSessionPopUp.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        invalidSessionPopUp.SetActive(false);
+    }
+    ```
 
 ??? example "Пример настройки Input Field (TMP)"
 

@@ -6,7 +6,21 @@ icon: lucide/bug-play
 
 ## Вылет после первого запуска
 
-Самые частые проблемы:
+Для диагностики - сделайте билд с галочкой `Development` и [подключите консоль к ПК][Target Manager]. Установите и запустите приложение, далее повторите шаги, указанные QA-специалистом.
+
+Основная интересующая вас информация будет отображаться в поле `All targets log`.
+
+**Nintendo Switch** также сохранит `Crash Dump` файл при вылете приложения. Найти его можно в папке `%USERPROFILE%\Documents\Nintendo\NXDMP`. Если файлов несколько - отсортируйте их в проводнике Windows по дате, нажав на столбец "Дата изменения" (Date modified).
+
+Открыть `Crash Dump` файл можно в Visual Studio. В разделе Actions нажмите кнопку `Debug`. Далее, на нижней панели `Call Stack` вы найдете `View all Threads`.
+
+[Target Manager]: ../nintendo/switch-target-manager.md
+
+??? example "Пример отладки ошибки CreateDirectory"
+
+    ![NXDMP Debug](../assets/nxdmp-debug.png)
+
+### Частые проблемы
 
 - **Попытка создать файл**: `Error: nn::fs::CreateDirectory() failed because the operation is unsupported` > **[Рефактор Save System]** (замена `persistentDataPath`, `FileStream`)
 - **Превышение используемой RAM**: `Accessed to unmapped memory space` > **[Сжатие текстур]**, чтобы одна сцена занимала не более **2.6** ГБ или **рефактор** `Loading Manager`: Сцена 1 > Пустая сцена c отгрузкой `Resources.UnloadUnusedAssets()` и `GC.Collect()` > Сцена 2
