@@ -97,7 +97,161 @@ Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
 
 > Подробнее в [документации Unity](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.19/manual/Gamepad.html#rumble).
 
-Самые частые проблемы:
+??? note "Вызовите Vibrate() через контекстное меню для теста"
+
+    ``` CSharp title="VibrationManager.cs" linenums="1"
+    using System.Collections;
+    using UnityEngine;
+    using UnityEngine.InputSystem;
+
+    public class VibrationManager : MonoBehaviour
+    {
+        [Header("Default Vibration Settings")]
+        [Range(0f, 1f)] public float defaultLowFrequency = 0f;
+        [Range(0f, 1f)] public float defaultHighFrequency = 0.45f;
+        public float defaultDuration = 0.03f;
+
+        private Coroutine _vibrationRoutine;
+
+        /// <summary>
+        /// Starts vibration with the same strength for both motors.
+        /// </summary>
+        public void Vibrate(float strength, float duration)
+        {
+            if (Gamepad.current == null) return;
+
+            float clamped = Mathf.Clamp01(strength);
+            if (_vibrationRoutine != null)
+                StopCoroutine(_vibrationRoutine);
+
+            _vibrationRoutine = StartCoroutine(VibrationRoutine(clamped, clamped, duration));
+        }
+
+        /// <summary>
+        /// Starts vibration with different strengths for left and right motors.
+        /// </summary>
+        public void Vibrate(float leftStrength, float rightStrength, float duration)
+        {
+            if (Gamepad.current == null) return;
+
+            float left = Mathf.Clamp01(leftStrength);
+            float right = Mathf.Clamp01(rightStrength);
+
+            if (_vibrationRoutine != null)
+                StopCoroutine(_vibrationRoutine);
+
+            _vibrationRoutine = StartCoroutine(VibrationRoutine(left, right, duration));
+        }
+
+        /// <summary>
+        /// Starts vibration based on an animation curve (same for both motors).
+        /// </summary>
+        public void Vibrate(AnimationCurve curve)
+        {
+            if (Gamepad.current == null) return;
+
+            if (_vibrationRoutine != null)
+                StopCoroutine(_vibrationRoutine);
+
+            _vibrationRoutine = StartCoroutine(VibrationCurveRoutine(curve));
+        }
+
+        /// <summary>
+        /// Starts vibration using default values.
+        /// </summary>
+        [ContextMenu("Vibrate")]
+        public void Vibrate()
+        {
+            if (Gamepad.current == null) return;
+
+            if (_vibrationRoutine != null)
+                StopCoroutine(_vibrationRoutine);
+
+            _vibrationRoutine = StartCoroutine(VibrationRoutine(1f, 1f, defaultDuration));
+        }
+
+        /// <summary>
+        /// Stops any active vibration immediately.
+        /// </summary>
+        public void StopVibration()
+        {
+            if (_vibrationRoutine != null)
+            {
+                StopCoroutine(_vibrationRoutine);
+                _vibrationRoutine = null;
+            }
+
+    #if UNITY_PS5 && !UNITY_EDITOR
+            UnityEngine.PS5.PS5Input.PadSetVibration(0, 0, 0);
+    #else
+            if (Gamepad.current != null)
+                Gamepad.current.ResetHaptics();
+    #endif
+        }
+
+        private IEnumerator VibrationRoutine(float leftStrength, float rightStrength, float duration)
+        {
+            Gamepad activeGamepad = Gamepad.current;
+            if (activeGamepad == null) yield break;
+
+    #if UNITY_PS5 && !UNITY_EDITOR
+            UnityEngine.PS5.PS5Input.PadSetVibrationMode(0, UnityEngine.PS5.PS5Input.VibrationMode.Compatible);
+            UnityEngine.PS5.PS5Input.PadSetVibration(0, (int)Mathf.Lerp(0, 1000, leftStrength * defaultLowFrequency),
+                (int)Mathf.Lerp(0, 1000, rightStrength * defaultHighFrequency));
+            yield return new WaitForSecondsRealtime(duration);
+            UnityEngine.PS5.PS5Input.PadSetVibration(0, 0, 0);
+    #else
+            activeGamepad.SetMotorSpeeds(leftStrength * defaultLowFrequency, rightStrength * defaultHighFrequency);
+            yield return new WaitForSecondsRealtime(duration);
+
+            if (activeGamepad != null)
+                activeGamepad.ResetHaptics();
+    #endif
+            _vibrationRoutine = null;
+        }
+
+        private IEnumerator VibrationCurveRoutine(AnimationCurve curve)
+        {
+            Gamepad activeGamepad = Gamepad.current;
+            if (activeGamepad == null) yield break;
+
+            float time = 0f;
+            float duration = curve.keys.Length > 0 ? curve.keys[curve.length - 1].time : 1f;
+
+            while (time < duration)
+            {
+                if (activeGamepad == null) yield break;
+
+                float value = Mathf.Clamp01(curve.Evaluate(time));
+
+    #if UNITY_PS5 && !UNITY_EDITOR
+                UnityEngine.PS5.PS5Input.PadSetVibrationMode(0, UnityEngine.PS5.PS5Input.VibrationMode.Compatible);
+                UnityEngine.PS5.PS5Input.PadSetVibration(0, (int)Mathf.Lerp(0, 1000, value),
+                    (int)Mathf.Lerp(0, 1000, value));
+    #else
+                activeGamepad.SetMotorSpeeds(value * 1, value * 1);
+    #endif
+                time += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+    #if UNITY_PS5 && !UNITY_EDITOR
+            UnityEngine.PS5.PS5Input.PadSetVibration(0, 0, 0);
+    #else
+            if (activeGamepad != null)
+                activeGamepad.ResetHaptics();
+    #endif
+            _vibrationRoutine = null;
+        }
+
+        private void OnDisable()
+        {
+            StopVibration();
+        }
+    }
+    ```
+
+### Частые проблемы
 
 - **Бесконечная вибрация** при включении Паузы, когда `Time.timeScale = 0` (не срабатывает остановка вибрации через `Invoke`)
 - Завершение вибрации не срабатывает в `Coroutine`, если для отсчета интервалов используются `WaitForSeconds` или `Time.deltaTime`
