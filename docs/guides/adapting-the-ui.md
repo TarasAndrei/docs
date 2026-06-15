@@ -38,7 +38,7 @@ icon: lucide/app-window
 
 !!! tip
 
-    Для добавления UI-подсказок для кнопок рекоммендуется использовать ассет [UI Hints Universal v3.0](https://trello.com/c/kbFEZagK/52-ui-hints-universal-auto-hints).
+    Для добавления UI-подсказок для кнопок рекомендуется использовать ассет [UI Hints Universal v3.0](https://trello.com/c/kbFEZagK/52-ui-hints-universal-auto-hints).
 
 ## Быстрая замена файлов
 

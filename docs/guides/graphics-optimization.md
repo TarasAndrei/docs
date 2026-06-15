@@ -65,6 +65,78 @@ icon: lucide/file-sliders
 
     После глобального сжатия текстур, сбросьте `Override` размера для `Baked Lightmaps`, чтобы не было смещения теней! Проверить это можно в окне **Window** > **Rendering** > **Lighting** > **Baked Lightmaps**.
 
+[Analysis]: https://docs.unity3d.com/Manual/analysis.html
+[Layer-based collision]: https://docs.unity3d.com/Manual/LayerBasedCollision.html
+[Physics Debug]: https://docs.unity3d.com/Manual/PhysicsDebugVisualization.html
+[Frame Debugger]: https://docs.unity3d.com/Manual/FrameDebugger-debug.html
+[Far clipping plane]: https://docs.unity3d.com/Manual/UnderstandingFrustum.html
+[Occlusion culling]: https://docs.unity3d.com/Manual/OcclusionCulling.html
+[Baked Light]: https://docs.unity3d.com/Manual/LightModes-introduction.html
+[Level of Detail]: https://docs.unity3d.com/Manual/LevelOfDetail.html
+[Terrain To Mesh]: https://trello.com/c/I964mG8n/37-terrain-optimization
+[Compressor Texture]: https://trello.com/c/6PvnJtNf/27-new-test-tools-convertor-material-compressor-texture-srp-urp-hdrp
+[Runtime asset management]: https://docs.unity3d.com/Manual/assets-managing-introduction.html
+
+### Настройка аудио
+
+В некоторых проектах возникают микро-статтеры ("фризы") при переключении трека фоновой фузыки или при спаме навыков персонажа. Для избежания таких багов, а также для оптимизации RAM рекомендуется использовать следующие настройки `Audio Clip`:
+
+| Audio Type | Load In Background | Load Type | Compression Format | Quality | Sample Rate |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **BGM/Ambience** _(треки > 1 мин)_ |:lucide-check:| `Streaming` | `Vorbis` | **30%–50%** | _Optimize Sample Rate_ |
+| **Короткие звуки / SFX** _(выстрелы, шаги, UI < 1 сек)_ | :lucide-x: | `Decompress On Load` | `ADPCM` или `PCM` | **-**  | _Preserve Sample Rate_ |
+| **Озвучка/Диалоги** _(от 2 до 30 сек)_ | :lucide-check: | `Compressed In Memory` | `Vorbis` | **40%** | _Optimize Sample Rate_ |
+
+!!! tip
+
+    Если в проекте используется [FMOD](https://www.fmod.com/) для просмотра аудиотреков понадобится установить редактор FMOD Studio, а для билда под платформу Nintendo Switch - добавить содержимое [архива][FMOD Switch] в `..\FMOD\Platforms`.
+
+[FMOD Switch]: https://trello.com/c/FGAXZifM/22-fmod-sound-effects-engine-plugin-for-switch
+
+### Ограничение (лок) FPS
+
+В некоторых играх устанавливают ограничение максимального количества кадров в секунду. Если после ваших действий нет видимых улучшений - проверьте в сборке код по примеру:
+
+``` CSharp title="Пример ограничения до 30 FPS для Nintendo:" linenums="1"
+using UnityEngine;
+
+public class FrameRateInitializer : MonoBehaviour
+{
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void OnBeforeSceneLoad()
+    {
+        QualitySettings.vSyncCount = 2;
+        Application.targetFrameRate = -1;
+    }
+}
+```
+
+### Примеры
+
+Сделайте билд с галочкой `Development` и [подключите консоль к ПК][Target Manager]. Установите и запустите приложение, далее выберите цель в окне **Profiler** (++ctrl+7++):
+
+[Target Manager]: ../nintendo/switch-target-manager.md
+
+???+ example "Профилирование на подключенной консоли"
+
+    ![Nintendo Switch Profiling](../assets/switch-profiling.png)
+
+Для проверки физики на сцене откройте **Window** > **Analysis** > **Physics Debugger**:
+
+???+ example "Включите `Gizmos` и `Mouse Select` в окне `Scene` для удобного выделения"
+
+    ![Physics Debug Rendering](../assets/physics-debug-rendering.png)
+
+???+ example "Отключите `Show Static Colliders` чтобы найти триггер-зоны"
+
+    ![Physics Debug Filtering](../assets/physics-debug-filtering.png)
+
+Пошаговый анализ отрисовки кадра доступен в **Window** > **Analysis** > **Frame Debugger**:
+
+???+ example "Проверка покадровой отрисовки для оптимизации UI"
+
+    ![Frame Debugger Window](../assets/frame-debugger.png)
+
 ??? note "Пример запуска метода в `MonoBehaviour` по событию"
 
     ``` CSharp title="OnEventsExecute.cs" linenums="1"
@@ -112,42 +184,6 @@ icon: lucide/file-sliders
         private void OnDestroy() => Invoke(GameEvent.OnDestroy);
     }
     ```
-
-[Analysis]: https://docs.unity3d.com/Manual/analysis.html
-[Layer-based collision]: https://docs.unity3d.com/Manual/LayerBasedCollision.html
-[Physics Debug]: https://docs.unity3d.com/Manual/PhysicsDebugVisualization.html
-[Frame Debugger]: https://docs.unity3d.com/Manual/FrameDebugger-debug.html
-[Far clipping plane]: https://docs.unity3d.com/Manual/UnderstandingFrustum.html
-[Occlusion culling]: https://docs.unity3d.com/Manual/OcclusionCulling.html
-[Baked Light]: https://docs.unity3d.com/Manual/LightModes-introduction.html
-[Level of Detail]: https://docs.unity3d.com/Manual/LevelOfDetail.html
-[Terrain To Mesh]: https://trello.com/c/I964mG8n/37-terrain-optimization
-[Compressor Texture]: https://trello.com/c/6PvnJtNf/27-new-test-tools-convertor-material-compressor-texture-srp-urp-hdrp
-[Runtime asset management]: https://docs.unity3d.com/Manual/assets-managing-introduction.html
-
-Сделайте билд с галочкой `Development` и [подключите консоль к ПК][Target Manager]. Установите и запустите приложение, далее выберите цель в окне **Profiler** (++ctrl+7++):
-
-[Target Manager]: ../nintendo/switch-target-manager.md
-
-???+ example "Профилирование на подключенной консоли"
-
-    ![Nintendo Switch Profiling](../assets/switch-profiling.png)
-
-Для проверки физики на сцене откройте **Window** > **Analysis** > **Physics Debugger**:
-
-???+ example "Включите `Gizmos` и `Mouse Select` в окне `Scene` для удобного выделения"
-
-    ![Physics Debug Rendering](../assets/physics-debug-rendering.png)
-
-???+ example "Отключите `Show Static Colliders` чтобы найти триггер-зоны"
-
-    ![Physics Debug Filtering](../assets/physics-debug-filtering.png)
-
-Пошаговый анализ отрисовки кадра доступен в **Window** > **Analysis** > **Frame Debugger**:
-
-???+ example "Проверка покадровой отрисовки для оптимизации UI"
-
-    ![Frame Debugger Window](../assets/frame-debugger.png)
 
 !!! note
 

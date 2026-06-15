@@ -18,7 +18,7 @@ icon: lucide/square-terminal
 
 ## Проекты на Unity 202X
 
-Для апгрейда c версий Unity 5 до Unity 6 проектов с уже интегрированным пакетом `PlayerPrefs_Switch` рекоммендуется использовать пакет `SwitchPrefs`.
+Для апгрейда c версий Unity 5 до Unity 6 проектов с уже интегрированным пакетом `PlayerPrefs_Switch` рекомендуется использовать пакет `SwitchPrefs`.
 
 > Подробнее в [документации][SwitchPrefs].
 
