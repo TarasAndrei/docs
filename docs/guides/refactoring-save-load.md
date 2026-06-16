@@ -49,20 +49,30 @@ icon: lucide/square-terminal
 
     Важно знать, что метод `PlayerPrefs.DeleteAll()` не работает на Nintendo Switch. Для удаления сохранений вам придется удалять ранее созданные ключи, либо сбрасывать их значения на `default`.
 
-??? note "Пример метода SaveBridge.DeleteAllPP"
+??? note "Пример удаления прогресса"
 
-    ``` CSharp title="Добавьте в SaveBridge.cs"
-        // SaveBridge.DeleteAllPP
-        public static void DeleteAllPP()
+    ``` CSharp title="GameDataResetter.cs" linenums="1"
+    using UnityEngine;
+
+    public static class GameDataResetter
+    {
+        private static readonly string[] GameplayKeys = 
         {
-    #if UNITY_SWITCH && !UNITY_EDITOR
-            cache.Clear();
-            ES3.DeleteFile();
-    #else
-            PlayerPrefs.DeleteAll();
-    #endif
-            SaveAllData();
+            "Gameplay_CurrentLevel",
+            "Gameplay_CoinsCount",
+            "Gameplay_TutorialCompleted"
+        };
+
+        public static void ResetGameProgress()
+        {
+            foreach (string key in GameplayKeys)
+            {
+                SaveBridge.DeleteKeyPP(key);
+            }
+
+            SaveBridge.SaveAllData(true);
         }
+    }
     ```
 
 > Подробнее в [документации][SaveBridge].

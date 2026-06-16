@@ -95,18 +95,21 @@ icon: lucide/file-sliders
 
 ### Ограничение (лок) FPS
 
-В некоторых играх устанавливают ограничение максимального количества кадров в секунду. Если после ваших действий нет видимых улучшений - проверьте в сборке код по примеру:
+В некоторых играх устанавливают ограничение максимального количества кадров в секунду. Если после ваших действий нет видимых улучшений - поищите в сборке `targetFrameRate`:
 
 ``` CSharp title="Пример ограничения до 30 FPS для Nintendo:" linenums="1"
 using UnityEngine;
 
-public class FrameRateInitializer : MonoBehaviour
+public static class FrameRateInitializer
 {
+    private const int EverySecondVBlank = 2;
+    private const int UseVSyncLimit = -1;
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void OnBeforeSceneLoad()
+    private static void InitializeFrameRate()
     {
-        QualitySettings.vSyncCount = 2;
-        Application.targetFrameRate = -1;
+        QualitySettings.vSyncCount = EverySecondVBlank;
+        Application.targetFrameRate = UseVSyncLimit;
     }
 }
 ```
