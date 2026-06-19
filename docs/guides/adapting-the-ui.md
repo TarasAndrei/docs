@@ -20,6 +20,10 @@ icon: lucide/app-window
 
     ![Controls Sample Image](../assets/controls-sample.png)
 
+!!! tip
+
+    Готовый шаблон схемы управления со стрелками и подписями доступен в Figma, в файле [Tutorial Sample](https://www.figma.com/design/KzgvL58c7ZWB4gsE6Yh8T4/Tutorial-Sample?node-id=15416-110&t=8WHLWzstvbrGJKXg-1).
+
 ## Адаптация UX/UI
 
 Обратите внимание, что пропорции экранов могут отличаться в зависимости от режима работы устройства. **Nintendo Switch** использует разрешение 1280×720 в Handheld Mode и 1920×1080 в TV Mode. **Проверяйте отображение интерфейса при разных разрешениях** и включайте параметр `Preserve Aspect` у компонентов `Image` с типом `Sprite (2D and UI)`.
