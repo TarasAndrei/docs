@@ -14,7 +14,7 @@ icon: lucide/square-terminal
 
     > Подробнее о порядке вызова [системных методов Unity](https://docs.unity3d.com/Manual/execution-order.html).
 
-[Attribute]: https://docs.unity3d.com/6000.4/Documentation/ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html
+[Attribute]: https://docs.unity3d.com/ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html
 
 ## Проекты на Unity 202X
 

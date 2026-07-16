@@ -42,5 +42,5 @@ icon: lucide/file-box
 [Input System]: ../guides/managing-inputs.md
 [HDRP]: ../guides/graphics-optimization.md#hdrp-urp
 [LOD]: ../guides/graphics-optimization.md#_2
-[Logging]: ../guides/graphics-optimization.md#_3
+[Logging]: ../guides/graphics-optimization.md#_5
 [YAGNI]: ../getting-started/#_2
