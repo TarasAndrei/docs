@@ -318,10 +318,28 @@ private async void ResetHaptics()
         if (string.IsNullOrWhiteSpace(input)) return false;
 
     #if UNITY_SWITCH
-        return !NintendoCheckProfanity.CheckProfanityWordsSample(input);
+        // Nintendo's profanity check (ngc library)
+        if (!NintendoCheckProfanity.CheckProfanityWordsSample(input))
+        {
+            return true;
+        }
+
+        // Additional words from guideline 0075 for profanity
+        string[] additionalBannedWords = { "warumoshi", "qxzq", "qxz" };
+        string lowerInput = input.ToLowerInvariant();
+
+        foreach (string word in additionalBannedWords)
+        {
+            if (lowerInput.Contains(word))
+            {
+                return true;
+            }
+        }
+
+        return false;
     #else
         string[] bannedWords = { "badword1", "badword2", "badword3" };
-        string lowerInput = input.ToLower();
+        string lowerInput = input.ToLowerInvariant();
 
         foreach (string word in bannedWords)
         {
@@ -330,6 +348,7 @@ private async void ResetHaptics()
                 return true; // Profanity detected
             }
         }
+
         return false; // Clean text
     #endif
     }
