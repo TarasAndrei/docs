@@ -43,4 +43,4 @@ icon: lucide/file-box
 [HDRP]: ../guides/graphics-optimization.md#hdrp-urp
 [LOD]: ../guides/graphics-optimization.md#_2
 [Logging]: ../guides/graphics-optimization.md#_5
-[YAGNI]: ../getting-started/#_2
+[YAGNI]: ../getting-started/#_3
