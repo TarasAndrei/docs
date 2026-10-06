@@ -10,7 +10,7 @@ icon: lucide/blocks
 
 ## Создание билда для DLC
 
-Для тестов DLC необходимо **установить билд приложения и ключ**, открывающий новый контент. Контент входит в основной билд. Соответственно для проверки устанавливать и удалять можно **только ключ** (файл размером ~ 300-400 KB).
+Для тестов DLC необходимо **установить билд приложения и ключ**, открывающий новый контент. Контент входит в основной билд. Соответственно для проверки активации устанавливать и удалять можно **только ключ** (файл размером ~ 300-400 KB).
 
 Билд **.nsp** файла-ключа для _AddOnContent_ создается через командную строку:
 
@@ -18,7 +18,7 @@ icon: lucide/blocks
 - Введите команду по шаблону: **версия Unity проекта**\\**AuthoringTool** > **"Путь для билда"** > **"Путь к \_DLC_Project_Name.nmeta"**
 
 ``` CSharp title="Пример команды:"
-C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\NintendoSDK\Tools\CommandLineTools\AuthoringTool\AuthoringTool.exe creatensp -o "C:\Builds\_DLC_Project_Name.nsp" --save-adf --type AddOnContent --meta "C:\Work\Project_Name\_DLC_Project_Name.nmeta"
+C:\Nintendo\Unity6000.3.17_LTS-NXAddon21.4.0-Unity6.3\NintendoSDK\Tools\CommandLineTools\AuthoringTool\AuthoringTool.exe creatensp -o "C:\Builds\_DLC_Project_Name.nsp" --save-adf --type AddOnContent --meta "C:\Work\Project_Name\_DLC_Project_Name.nmeta"
 ```
 
 !!! warning

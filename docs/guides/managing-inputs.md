@@ -8,8 +8,8 @@ icon: lucide/file-cog
 
 Если в проекте используется **Unity Input System** - добавьте **соответствующий платформе** и **версии Unity проекта** пакет в папку `..\Packages` из папки с установленным SDK:
 
-- Например, откройте `C:\Nintendo\Unity6000.1.15_NXAddon20.5.6-Unity6.1\UnityForNintendoSwitch\Packages`
-- Скопируйте папку `com.unity.inputsystem.switch@0.1.7-pre`
+- Например, откройте `C:\Nintendo\Unity6000.3.17_LTS-NXAddon21.4.0-Unity6.3\UnityForNintendoSwitch\Packages`
+- Скопируйте папку `com.unity.inputsystem.switch@1.0.0`
 - Откройте `C:\Work\Project_Name\Packages`
 - Вставьте папку и дождитесь рекомпилляции проекта
 - Проверьте чтобы в **Project Settings** > **Player** > **Other Settings** > **Controls** > **Supported Npad Styles** > были настройки **Full Key, Handheld, Joy Dual**
@@ -274,7 +274,7 @@ private async void ResetHaptics()
 
 ## Попап Joy-Con Grip
 
-Для отображения попапа с текстом `The Joy-Con Grip Accessory is Recommended when Playing` **при смене режима игры** (например, с `Handheld` на `Tabletop`) - добавьте пакет [`CheckNintendoInputSingle.unitypackage`][Input Nintendo Check] в папку `..\Assets\_Nintendo`.
+Для отображения попапа с текстом `The Joy-Con Grip Accessory is Recommended when Playing` **при смене режима игры** (например, с `Handheld` на `Tabletop`) - добавьте пакет [`CheckNintendoInputSingleTMP.unitypackage`][Input Nintendo Check] в папку `..\Assets\_Nintendo`.
 
 По-необходимости, дизайн `Warning_JOY-CON.prefab` можно поменять в соответствии с Figma. Найти его можно в папке проекта и далее `..\Assets\Resources`.
 

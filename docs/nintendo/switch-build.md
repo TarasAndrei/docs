@@ -21,7 +21,7 @@ icon: lucide/hammer
 - Проверьте результат нажав кнопку **Preview**
 - Закройте редактор **Unity** и сделайте коммит (_ProjectSettings.asset_)
 
-[Splash Screen]: https://docs.unity3d.com/Manual/class-PlayerSettingsSplashScreen.html
+[Splash Screen]: https://docs.unity3d.com/Manual/class-PlayerSettings.html
 
 !!! note
 
